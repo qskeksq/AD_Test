@@ -22,8 +22,8 @@ public class Words_Helper extends SQLiteOpenHelper{
                 + DbSchema.Words_Table.Words_Cols.WORDS_DATE + ", "
                 + DbSchema.Words_Table.Words_Cols.TITLE + ", "
                 + DbSchema.Words_Table.Words_Cols.BOOK + ", "
-                + DbSchema.Words_Table.Words_Cols.CHAP + ", "
-                + DbSchema.Words_Table.Words_Cols.PHRASE + ", "
+//                + DbSchema.Words_Table.Words_Cols.CHAP + ", "
+//                + DbSchema.Words_Table.Words_Cols.PHRASE + ", "
                 + DbSchema.Words_Table.Words_Cols.WORDS + ", "
                 + DbSchema.Words_Table.Words_Cols.SUMMARY + ")";
         db.execSQL(sql);

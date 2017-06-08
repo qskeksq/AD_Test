@@ -25,8 +25,8 @@ public class Words_CursorWrapper extends CursorWrapper {
         long date = getLong(getColumnIndex(DbSchema.Words_Table.Words_Cols.WORDS_DATE));
         String title = getString(getColumnIndex(DbSchema.Words_Table.Words_Cols.TITLE));
         String book = getString(getColumnIndex(DbSchema.Words_Table.Words_Cols.BOOK));
-        int chap = getInt(getColumnIndex(DbSchema.Words_Table.Words_Cols.CHAP));
-        int phrase = getInt(getColumnIndex(DbSchema.Words_Table.Words_Cols.PHRASE));
+//        int chap = getInt(getColumnIndex(DbSchema.Words_Table.Words_Cols.CHAP));
+//        int phrase = getInt(getColumnIndex(DbSchema.Words_Table.Words_Cols.PHRASE));
         String word = getString(getColumnIndex(DbSchema.Words_Table.Words_Cols.WORDS));
         String summary = getString(getColumnIndex(DbSchema.Words_Table.Words_Cols.SUMMARY));
 
@@ -35,8 +35,8 @@ public class Words_CursorWrapper extends CursorWrapper {
         words.setDate(new Date(date));
         words.setTitle(title);
         words.setBook(book);
-        words.setChap(chap);
-        words.setPhrase(phrase);
+//        words.setChap(chap);
+//        words.setPhrase(phrase);
         words.setWords(word);
         words.setSummary(summary);
 

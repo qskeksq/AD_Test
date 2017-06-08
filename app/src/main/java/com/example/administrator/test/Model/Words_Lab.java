@@ -49,8 +49,8 @@ public class Words_Lab {
         values.put(DbSchema.Words_Table.Words_Cols.WORDS_DATE , words.getDate().getTime());
         values.put(DbSchema.Words_Table.Words_Cols.TITLE , words.getTitle());
         values.put(DbSchema.Words_Table.Words_Cols.BOOK , words.getBook());
-        values.put(DbSchema.Words_Table.Words_Cols.CHAP , words.getChap());
-        values.put(DbSchema.Words_Table.Words_Cols.PHRASE , words.getPhrase());
+//        values.put(DbSchema.Words_Table.Words_Cols.CHAP , words.getChap());
+//        values.put(DbSchema.Words_Table.Words_Cols.PHRASE , words.getPhrase());
         values.put(DbSchema.Words_Table.Words_Cols.WORDS , words.getWords());
         values.put(DbSchema.Words_Table.Words_Cols.SUMMARY , words.getSummary());
         return values;

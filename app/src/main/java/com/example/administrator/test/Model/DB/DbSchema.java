@@ -34,8 +34,8 @@ public class DbSchema {
             public static final String WORDS_DATE = "words_date";
             public static final String TITLE = "wordsTitle";
             public static final String BOOK = "wordsBook";
-            public static final String CHAP = "wordsChap";
-            public static final String PHRASE = "wordsPhrase";
+//            public static final String CHAP = "wordsChap";
+//            public static final String PHRASE = "wordsPhrase";
             public static final String WORDS = "words";
             public static final String SUMMARY = "wordsSummary";
         }

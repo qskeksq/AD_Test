@@ -11,8 +11,8 @@ public class Words {
 
     private String title;
     private String book;
-    private int chap;
-    private int phrase;
+//    private int chap;
+//    private int phrase;
     private String words;
     private String summary;
     private Date date;
@@ -55,21 +55,21 @@ public class Words {
         this.book = book;
     }
 
-    public int getChap() {
-        return chap;
-    }
-
-    public void setChap(int chap) {
-        this.chap = chap;
-    }
-
-    public int getPhrase() {
-        return phrase;
-    }
-
-    public void setPhrase(int phrase) {
-        this.phrase = phrase;
-    }
+//    public int getChap() {
+//        return chap;
+//    }
+//
+//    public void setChap(int chap) {
+//        this.chap = chap;
+//    }
+//
+//    public int getPhrase() {
+//        return phrase;
+//    }
+//
+//    public void setPhrase(int phrase) {
+//        this.phrase = phrase;
+//    }
 
     public String getWords() {
         return words;

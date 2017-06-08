@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Words_Helper extends SQLiteOpenHelper{
 
     public Words_Helper(Context context){
-        super(context, DbSchema.DATABASE_NAME, null, 1);
+        super(context, DbSchema.DATABASE_NAME2, null, 1);
     }
 
     @Override

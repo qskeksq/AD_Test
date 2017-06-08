@@ -44,7 +44,7 @@ public class QT_Adapter extends RecyclerView.Adapter<QT_Adapter.QT_Holder> {
     }
 
     public String sdf(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat("yy년 MM월 dd일 E요일");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);
     }
 
@@ -69,7 +69,7 @@ public class QT_Adapter extends RecyclerView.Adapter<QT_Adapter.QT_Holder> {
         // 1. findViewById -- 좀 귀찮지만 일단 함수로 빼냈다
         public void findAddress(){
             txt_item_no = (TextView) convertView.findViewById(R.id.txt_item_no);
-            txt_item_title = (TextView) convertView.findViewById(R.id.txt_item_title);
+            txt_item_title = (TextView) convertView.findViewById(R.id.txt_word_item_title);
             txt_item_date = (TextView) convertView.findViewById(R.id.txt_item_date);
         }
 

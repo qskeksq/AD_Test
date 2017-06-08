@@ -7,6 +7,7 @@ package com.example.administrator.test.Model.DB;
 public class DbSchema {
 
     public static final String DATABASE_NAME = "dataBase1.db";
+    public static final String DATABASE_NAME2 = "dataBase2.db";
 
     public class QT_Table{
 

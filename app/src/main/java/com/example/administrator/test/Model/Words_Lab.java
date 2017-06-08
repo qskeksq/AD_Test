@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.administrator.test.Model.DB.DbSchema;
 import com.example.administrator.test.Model.DB.Words_CursorWrapper;
@@ -13,9 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Administrator on 2017-06-03.
- */
 
 public class Words_Lab {
 
@@ -41,6 +39,7 @@ public class Words_Lab {
     public void addWords(Words words){
         ContentValues values = getContentValues(words);
         db.insert(DbSchema.Words_Table.WORDS_TABLE_NAME, null, values);
+        Log.e("Lab", DbSchema.Words_Table.WORDS_TABLE_NAME);
     }
 
     public ContentValues getContentValues(Words words){

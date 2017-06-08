@@ -141,6 +141,7 @@ public class QT_Fragment extends Fragment{
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new QT_Fragment()).commit();
     }
 
+    // 삭제
     public void delete(){
         removeTempSaved();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new QT_Fragment()).commit();
@@ -191,7 +192,6 @@ public class QT_Fragment extends Fragment{
         setTempSave();
     }
 
-
     // 화면에 보여질 데이터 뷰에 뿌려주기
     public void out(){
         qt_view.setWeekView(qt.getWeek());
@@ -203,7 +203,7 @@ public class QT_Fragment extends Fragment{
     }
 
     public String sdf(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat("yy년 MM월 dd일 E요일");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String result = sdf.format(date);
         return result;
     }

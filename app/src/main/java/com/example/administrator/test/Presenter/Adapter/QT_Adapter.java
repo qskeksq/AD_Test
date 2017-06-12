@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.administrator.test.Model.QT;
+import com.example.administrator.test.Model2.QT;
 import com.example.administrator.test.R;
 
 import java.text.SimpleDateFormat;

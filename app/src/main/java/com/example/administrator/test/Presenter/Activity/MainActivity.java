@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
     // back 키 메소드 TODO 스레드를 이용해서 back 키 설정하기
     boolean back_status = true;
     @Override
@@ -99,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().addToBackStack("back").replace(R.id.fragment_container, fragment).commit();
                 break;
             case R.id.menu_settings:
+                getSupportFragmentManager().beginTransaction().addToBackStack("back").remove(fragment).commit();
+//                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//                getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fragment_container, new Settings_Fragment()).commit();
 //                TODO 스택 처리 안 해주면 계속 쌓인다
 //                int index = getSupportFragmentManager().getBackStackEntryCount() -1 ;
 //                Log.e("Main", index+"");

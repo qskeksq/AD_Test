@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.administrator.test.Model.QT;
-import com.example.administrator.test.Model.QT_Lab;
+import com.example.administrator.test.Model2.QT;
+import com.example.administrator.test.Model2.QT_Lab;
 import com.example.administrator.test.R;
 import com.example.administrator.test.View.QT_View;
 

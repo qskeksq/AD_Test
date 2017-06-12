@@ -17,8 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.administrator.test.Model.Words;
-import com.example.administrator.test.Model.Words_Lab;
+import com.example.administrator.test.Model2.Words;
+import com.example.administrator.test.Model2.Words_Lab;
 import com.example.administrator.test.R;
 import com.example.administrator.test.Schema;
 import com.example.administrator.test.View.Words_View;
@@ -111,7 +111,6 @@ public class Words_Fragment extends Fragment {
         // 또한 새로운 프래그먼트를 띄우주는 이유는 새 QT 객체를 만들어 주는 것, 날짜 갱신
         // TODO 원래는 인터페이스를 통한 메소드 통신을 해 줘야 함
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Words_Fragment()).commit();
-        Toast.makeText(getContext(), "저장", Toast.LENGTH_SHORT).show();
     }
 
     // 임시 저장

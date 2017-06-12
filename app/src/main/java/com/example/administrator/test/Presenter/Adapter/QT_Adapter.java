@@ -1,26 +1,29 @@
 package com.example.administrator.test.Presenter.Adapter;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.administrator.test.Model2.QT;
+import com.example.administrator.test.Model.QT;
+import com.example.administrator.test.Presenter.Fragment.UpdateFragment.QT_Update_Fragment;
 import com.example.administrator.test.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 
 public class QT_Adapter extends RecyclerView.Adapter<QT_Adapter.QT_Holder> {
 
     List<QT> datas;
+    FragmentManager manager;
 
-    public QT_Adapter(List<QT> datas){
+    public QT_Adapter(List<QT> datas, FragmentManager manager){
         this.datas = datas;
+        this.manager = manager;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class QT_Adapter extends RecyclerView.Adapter<QT_Adapter.QT_Holder> {
         holder.setNo(position+1);
         holder.setTitle(qt.getQt());
         holder.setDate(sdf(qt.getDate()));
-        holder.setUUID(qt.getUuid());
+        holder.setId(qt.getId());
     }
 
     @Override
@@ -55,7 +58,7 @@ public class QT_Adapter extends RecyclerView.Adapter<QT_Adapter.QT_Holder> {
         TextView txt_item_no, txt_item_title, txt_item_date;
         View convertView;
         // 받아오는 값
-        UUID resId;
+        int id;
 
 
         // 0. 생성자
@@ -75,7 +78,9 @@ public class QT_Adapter extends RecyclerView.Adapter<QT_Adapter.QT_Holder> {
 
         // 2. 리스너
         public void onClick(View view){
-            // + 버튼에서 호출하는 메소드 오버로딩, 값을 받을 수 있도록 한다.
+            QT_Update_Fragment fragment = QT_Update_Fragment.newInstance(id);
+            manager.beginTransaction().addToBackStack(null).add(R.id.fragment_container, fragment).commit();
+
         }
 
         // 3. set 함수
@@ -91,8 +96,8 @@ public class QT_Adapter extends RecyclerView.Adapter<QT_Adapter.QT_Holder> {
             txt_item_date.setText(date);
         }
 
-        public void setUUID(UUID uuid){
-            resId = uuid;
+        public void setId(int id) {
+            this.id = id;
         }
 
     }

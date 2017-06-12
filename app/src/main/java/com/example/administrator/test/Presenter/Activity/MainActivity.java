@@ -16,6 +16,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,7 +51,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     boolean back_status = true;
     @Override
     public void onBackPressed() {
-        if(back_status) {
+        int index = getSupportFragmentManager().getBackStackEntryCount() -1 ;
+        Log.e("Main", index+"");
+
+        // 만약 스택에 2개가 쌓여 있다면 == 현재 상세보기를 하고 있을 때 back 키를 누른다면 뒤로가기가 되어야 한다.
+        if(index == 2){
+            super.onBackPressed();
+        } else if(back_status) {
             if (view.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 view.drawerLayout.closeDrawer(GravityCompat.START);
             } else {
@@ -203,6 +210,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void closeDrawer() {
         view.drawerLayout.closeDrawer(GravityCompat.START);
     }
+
+//    // 열 수 없음
+//    public void drawerDisabled(){
+//        view.drawerLayout.setVisibility(View.INVISIBLE);
+//    }
 
 
 //--------------------------------------------------------------------------------------------------

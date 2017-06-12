@@ -9,5 +9,4 @@ public interface DrawerInterface {
     void openDrawer();
 
     void closeDrawer();
-
 }

@@ -17,8 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.administrator.test.Model2.Words;
-import com.example.administrator.test.Model2.Words_Lab;
+import com.example.administrator.test.Model.Words;
+import com.example.administrator.test.Model.Words_Lab;
 import com.example.administrator.test.R;
 import com.example.administrator.test.Schema;
 import com.example.administrator.test.View.Words_View;
@@ -85,7 +85,6 @@ public class Words_Fragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 save();
-                Toast.makeText(getContext(), "저장되었습니다", Toast.LENGTH_SHORT).show();
             }
         });
         askSave.setNegativeButton("아니오", null);

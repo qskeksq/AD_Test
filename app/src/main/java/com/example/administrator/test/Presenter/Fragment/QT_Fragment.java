@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.administrator.test.Model2.QT;
-import com.example.administrator.test.Model2.QT_Lab;
+import com.example.administrator.test.Model.QT;
+import com.example.administrator.test.Model.QT_Lab;
 import com.example.administrator.test.R;
 import com.example.administrator.test.View.QT_View;
 
@@ -135,7 +135,6 @@ public class QT_Fragment extends Fragment{
 
     // 저장 -- save
     public void save(){
-        Toast.makeText(getContext(), "확인", Toast.LENGTH_SHORT).show();
         QT_Lab.getQTLAB(getContext()).addQT(qt);
         removeTempSaved();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new QT_Fragment()).commit();

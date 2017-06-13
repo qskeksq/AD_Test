@@ -64,20 +64,20 @@ public class QT_View implements View.OnClickListener, View.OnLongClickListener{
 
     public void findAddress(){
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        date = (TextView) view.findViewById(R.id.txt_detail_date);
-        txt_detail_week = (EditText) view.findViewById(R.id.txt_detail_week);
-        txt_detail_qt = (EditText) view.findViewById(R.id.txt_detail_qt);
-        txt_detail_thanks = (EditText) view.findViewById(R.id.txt_detail_thanks);
-        txt_detail_prayer = (EditText) view.findViewById(R.id.txt_detail_prayer);
+        date = (TextView) view.findViewById(R.id.show_txt_detail_date);
+        txt_detail_week = (EditText) view.findViewById(R.id.show_txt_detail_week);
+        txt_detail_qt = (EditText) view.findViewById(R.id.show_txt_detail_qt);
+        txt_detail_thanks = (EditText) view.findViewById(R.id.show_txt_detail_thanks);
+        txt_detail_prayer = (EditText) view.findViewById(R.id.show_txt_detail_prayer);
         txt_detail_journal = (EditText) view.findViewById(R.id.txt_detail_journal);
         btn_add_thanks = (ImageView) view.findViewById(R.id.btn_add_thanks);
         btn_add_prayer = (ImageView) view.findViewById(R.id.btn_add_prayer);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
-        check_week = (CheckBox) view.findViewById(R.id.check_week);
-        check_qt = (CheckBox) view.findViewById(R.id.check_qt);
-        check_thanks =(CheckBox) view.findViewById(R.id.check_thanks);
-        check_prayer = (CheckBox) view.findViewById(R.id.check_prayer);
+        check_week = (CheckBox) view.findViewById(R.id.show_check_week);
+        check_qt = (CheckBox) view.findViewById(R.id.show_check_qt);
+        check_thanks =(CheckBox) view.findViewById(R.id.show_check_thanks);
+        check_prayer = (CheckBox) view.findViewById(R.id.show_check_prayer);
         check_journal = (CheckBox) view.findViewById(R.id.check_journal);
     }
 

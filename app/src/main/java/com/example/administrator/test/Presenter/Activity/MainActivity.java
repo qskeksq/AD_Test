@@ -6,12 +6,14 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.administrator.test.BuildConfig;
 import com.example.administrator.test.Presenter.DrawerInterface;
 import com.example.administrator.test.Presenter.Fragment.Calendar_Fragment;
 import com.example.administrator.test.Presenter.Fragment.Decision_Fragment;
@@ -32,10 +35,14 @@ import com.example.administrator.test.Presenter.Fragment.Words_Fragment;
 import com.example.administrator.test.R;
 import com.example.administrator.test.View.Main_View;
 
+import java.io.File;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DrawerInterface, View.OnClickListener {
 
     Fragment fragment;
     Main_View view;
+    AlertDialog.Builder dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.e("Main", index+"");
 
         // 만약 스택에 2개가 쌓여 있다면 == 현재 상세보기를 하고 있을 때 back 키를 누른다면 뒤로가기가 되어야 한다.
-        if(index == 2){
-            super.onBackPressed();
-        } else if(back_status) {
+        if(back_status) {
             if (view.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 view.drawerLayout.closeDrawer(GravityCompat.START);
             } else {
@@ -74,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
     }
-
 
     // 네이게이션 메뉴 선택 메소드
     @Override
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_list:
                 fragment = new List_Fragment();
-                getSupportFragmentManager().beginTransaction().addToBackStack("back").replace(R.id.fragment_container, fragment).commit();
+                getSupportFragmentManager().beginTransaction().addToBackStack("listback").replace(R.id.fragment_container, fragment).commit();
                 break;
             case R.id.menu_calendar:
                 fragment = new Calendar_Fragment();
@@ -136,6 +140,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.imageView:
                 headerPhotoClicked();
+                break;
+            case R.id.img_nav_photo:
+                runPhoto();
+                break;
+            case R.id.img_nav_camera:
+                runCamera();
+                break;
         }
     }
 
@@ -180,23 +191,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 사진을 눌렀을 때 권한 처리를 해 주자
         ImageView photo = (ImageView) view.findViewById(R.id.img_nav_photo); // TODO View 로 빼줘야 하지만 너무 복잡해서 놔둠
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    customCheckPermission();
-                } else  {
-                    run();
-                }
-            }
-        });
+        photo.setOnClickListener(this);
+        ImageView camera = (ImageView) view.findViewById(R.id.img_nav_camera);
+        camera.setOnClickListener(this);
     }
 
     // 카메라, 사진 선택 커스텀 다이얼로그
     public void cameraDialog(View view){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog = new AlertDialog.Builder(this);
         dialog.setView(view);
-        dialog.show();
+        // 퍼미션 체크를 먼저 하고 그 다음 다이얼로그를 띄우면 굳이 제어문을 쓰지 않아도 된다.
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            customCheckPermission();
+        } else {
+            dialog.show();
+        }
     }
     //----------------------------------------------------------------------------------------------
     // 인터페이스를 통해서 drawer 을 여는 메소드 오버라이딩
@@ -211,33 +220,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         view.drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-//    // 열 수 없음
-//    public void drawerDisabled(){
-//        view.drawerLayout.setVisibility(View.INVISIBLE);
-//    }
-
 
 //--------------------------------------------------------------------------------------------------
 //    권한 설정 영역
 //--------------------------------------------------------------------------------------------------
 
-    private static final int REQ_CODE = 100; // 요청 코드
+    private static final int REQ_CODE = 99;
+    private static final int REQ_PHOTO_CODE = 100;
+    private static final int REQ_CAM_CODE = 101;
 
     // 갤러리 암시적 인텐트
-    public void run(){
+    public void runPhoto(){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(intent, "선택"), REQ_CODE);
+        startActivityForResult(Intent.createChooser(intent, "선택"), REQ_PHOTO_CODE);
+    }
+
+    // 카메라 암시적 인텐트
+    Uri uri = null;
+    public void runCamera(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = createFile();
+        if(photoFile != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                uri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".provider", createFile());
+            } else {
+                uri = Uri.fromFile(createFile());
+            }
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            startActivityForResult(intent, REQ_CAM_CODE);
+        }
+    }
+
+    // 카메라 저장을 위한 file 과 저장소 만들기
+    public File createFile(){
+        // 저장소 만들기
+        String tempFileName = "TEMP_"+System.currentTimeMillis();
+        File dir = new File(Environment.getExternalStorageDirectory() +"/CameraN3/");
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+
+        File file = null;
+        try {
+            file = File.createTempFile(tempFileName, ".jpg", dir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return file;
     }
 
     // 권한 설정을 체크하는 메소드 -- 권한이 없으면 requestPermission 해준다.
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void customCheckPermission(){
         // 기존에 권한 설정이 되어 있다면 바로 실행
-        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-            run();
+        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+            dialog.show();
         } else {
             // 기존 권한 설정이 안 되어 있으면 권한을 묻는 메소드 호출
-            String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
             requestPermissions(perms , REQ_CODE);
         }
     }
@@ -247,8 +289,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // 만약 승인한다면 실행
-        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            run();
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+            dialog.show();
         } else {
             Toast.makeText(this, "권한요청을 승인하셔야 앱을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show();
         }
@@ -257,13 +299,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 요청을 했으면 값을 받아와야 한다.
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == RESULT_OK){
-            if(requestCode == REQ_CODE){
+            if(requestCode == REQ_PHOTO_CODE){
                 Uri imageUri = data.getData();
                 view.img_navi_profile.setImageURI(imageUri); // TODO View 영역이지만 그냥 둠.
             }
         }
     }
-
-
 
 }

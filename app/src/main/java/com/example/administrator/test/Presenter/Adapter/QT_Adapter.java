@@ -79,7 +79,7 @@ public class QT_Adapter extends RecyclerView.Adapter<QT_Adapter.QT_Holder> {
         // 2. 리스너
         public void onClick(View view){
             QT_Update_Fragment fragment = QT_Update_Fragment.newInstance(id);
-            manager.beginTransaction().addToBackStack(null).add(R.id.fragment_container, fragment).commit();
+            manager.beginTransaction().addToBackStack("qtlistback").add(R.id.fragment_container, fragment).commit();
 
         }
 

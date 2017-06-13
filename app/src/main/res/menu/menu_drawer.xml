@@ -10,15 +10,15 @@
                 <item
                     android:id="@+id/menu_add_qt"
                     android:icon="@drawable/ic_menu_qt"
-                    android:title="QT" />
+                    android:title="큐티" />
                 <item
                     android:id="@+id/menu_add_words"
                     android:icon="@drawable/ic_menu_word"
-                    android:title="Words" />
+                    android:title="말씀" />
                 <item
                     android:id="@+id/menu_add_decision"
                     android:icon="@drawable/ic_menu_decide"
-                    android:title="Decision" />
+                    android:title="결심" />
 
             </group>
         </menu>
@@ -30,17 +30,17 @@
         <item
             android:id="@+id/menu_list"
             android:icon="@drawable/ic_menu_list"
-            android:title="List" />
+            android:title="목록" />
 
         <item
             android:id="@+id/menu_calendar"
             android:icon="@drawable/ic_menu_calendar"
-            android:title="Calendar" />
+            android:title="캘린더" />
 
         <item
             android:id="@+id/menu_settings"
             android:icon="@drawable/ic_menu_settings"
-            android:title="Settings"/>
+            android:title="설정"/>
 
     </group>
 

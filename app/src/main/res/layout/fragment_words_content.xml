@@ -15,12 +15,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="title"
+        android:hint="제목"
         android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.502" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/show_txt_words_book"
@@ -30,7 +30,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
         android:ems="10"
-        android:hint="book"
+        android:hint="말씀"
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textSize="14sp"
@@ -49,15 +49,14 @@
         android:background="@android:drawable/editbox_background_normal"
         android:ems="10"
         android:gravity="top|left"
-        android:hint="words"
         android:inputType="textMultiLine|textPersonName"
         android:padding="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/show_txt_words_summary"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/show_txt_words_book"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintBottom_toTopOf="@+id/show_txt_words_summary" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/show_txt_words_summary"
@@ -68,7 +67,7 @@
         android:layout_marginRight="8dp"
         android:background="@android:drawable/editbox_background_normal"
         android:ems="10"
-        android:hint="summary"
+        android:hint="요약 실천"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

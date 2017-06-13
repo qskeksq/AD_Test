@@ -31,6 +31,7 @@ import com.example.administrator.test.Presenter.Fragment.Calendar_Fragment;
 import com.example.administrator.test.Presenter.Fragment.Decision_Fragment;
 import com.example.administrator.test.Presenter.Fragment.ListFragment.List_Fragment;
 import com.example.administrator.test.Presenter.Fragment.QT_Fragment;
+import com.example.administrator.test.Presenter.Fragment.Settings_Fragment;
 import com.example.administrator.test.Presenter.Fragment.Words_Fragment;
 import com.example.administrator.test.R;
 import com.example.administrator.test.View.Main_View;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().addToBackStack("back").replace(R.id.fragment_container, fragment).commit();
                 break;
             case R.id.menu_settings:
-                getSupportFragmentManager().beginTransaction().addToBackStack("back").remove(fragment).commit();
+                getFragmentManager().beginTransaction().addToBackStack("back").add(R.id.fragment_container, new Settings_Fragment()).commit();
 //                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 //                getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fragment_container, new Settings_Fragment()).commit();
 //                TODO 스택 처리 안 해주면 계속 쌓인다

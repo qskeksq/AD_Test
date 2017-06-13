@@ -13,4 +13,11 @@ public class Settings_Fragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.preferences);
     }
 
+    public void onPause(){
+        super.onPause();
+
+        getFragmentManager().beginTransaction().remove(this).commit();
+
+    }
+
 }

@@ -76,7 +76,7 @@ public class QT_Fragment extends Fragment{
                 break;
             case R.id.temp_save:
                 temp_save();
-                qt_view.changeEditableIcon(item);
+                qt_view.changeEditableIcon(item); /// TODO 여기가 아니라 temp_save 의 일부로 같이 들어가야 함.
                 break;
             case R.id.copy:
                 qt_view.setClipBoardEnabled();

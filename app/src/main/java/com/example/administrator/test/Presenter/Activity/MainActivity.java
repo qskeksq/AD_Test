@@ -18,7 +18,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,10 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     boolean back_status = true;
     @Override
     public void onBackPressed() {
-        int index = getSupportFragmentManager().getBackStackEntryCount() -1 ;
-        Log.e("Main", index+"");
-
-        // 만약 스택에 2개가 쌓여 있다면 == 현재 상세보기를 하고 있을 때 back 키를 누른다면 뒤로가기가 되어야 한다.
         if(back_status) {
             if (view.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 view.drawerLayout.closeDrawer(GravityCompat.START);
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // 선택할 때마다 새로운 프래그먼트를 띄워준다.
-        // TODO 리소스 관리 차원에서 미리 생성된 것으로 교체할 것인지 고민해보자!!
+        // TODO 전부 메소드로 빼낸다.
         int id = item.getItemId();
 
         switch (id){
@@ -158,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             managePopup(v);
             status = false;
         } else {
-            // TODO View 영역이지만 복잡해서 놔둠
+            // TODO 뷰로 빼낸다.
             view.img_navi_profile.setEnabled(false);
             view.btn_navi_settings.setImageResource(R.drawable.ic_action_settings_for_navigation);
             status = true;
@@ -185,20 +180,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // 헤더 프로필 사진 클릭 메소드
     public void headerPhotoClicked(){
-        // TODO 정리가 전혀 안된 느낌
+        // TODO 인플레이션은 생성자 초기화 할 때 같이 한 번만 해라. 여기다 두면 계속 인플레이션 하잖아
         // 일단 한 가지 뺴먹은 것은 manifest 에서 처리를 안 해줬다는 것!
         View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
         cameraDialog(view);
 
         // 사진을 눌렀을 때 권한 처리를 해 주자
-        ImageView photo = (ImageView) view.findViewById(R.id.img_nav_photo); // TODO View 로 빼줘야 하지만 너무 복잡해서 놔둠
-        photo.setOnClickListener(this);
-        ImageView camera = (ImageView) view.findViewById(R.id.img_nav_camera);
-        camera.setOnClickListener(this);
+        ImageView photo = (ImageView) view.findViewById(R.id.img_nav_photo); // TODO findAddress 로 가야 함
+        photo.setOnClickListener(this);  // TODO setListener 로 가야 함
+        ImageView camera = (ImageView) view.findViewById(R.id.img_nav_camera); // TODO findAddress 로 가야 함
+        camera.setOnClickListener(this); // TODO setListener 로 가야 함
     }
 
     // 카메라, 사진 선택 커스텀 다이얼로그
-    public void cameraDialog(View view){
+    public void cameraDialog(View view){  // TODO 대화 상자는 앞으로 프레젠터에 두겠다
         dialog = new AlertDialog.Builder(this);
         dialog.setView(view);
         // 퍼미션 체크를 먼저 하고 그 다음 다이얼로그를 띄우면 굳이 제어문을 쓰지 않아도 된다.

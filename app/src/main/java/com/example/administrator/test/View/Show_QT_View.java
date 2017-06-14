@@ -11,92 +11,72 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.administrator.test.Presenter.Activity.MainActivity;
-import com.example.administrator.test.Presenter.DrawerInterface;
-import com.example.administrator.test.Presenter.Fragment.QT_Fragment;
+import com.example.administrator.test.Presenter.Fragment.UpdateFragment.QT_Update_Fragment;
 import com.example.administrator.test.R;
 
 /**
- * Created by Administrator on 2017-06-04.
+ * Created by Administrator on 2017-06-13.
  */
 
-public class QT_View implements View.OnClickListener, View.OnLongClickListener{
-
+public class Show_QT_View implements View.OnClickListener, View.OnLongClickListener {
 
     View view;
-    QT_Fragment fragment;
+    QT_Update_Fragment fragment;
 
     Toolbar toolbar;
-    DrawerInterface di;
-    TextView date;
+    public TextView date;
     public EditText txt_detail_week, txt_detail_qt, txt_detail_thanks, txt_detail_prayer, txt_detail_journal;
-    ImageView btn_add_thanks, btn_add_prayer;
     FloatingActionButton fab;
     public CheckBox check_week, check_qt, check_thanks, check_prayer, check_journal;
 
 
-    public QT_View(View view, QT_Fragment fragment){
-
+    public Show_QT_View(View view, QT_Update_Fragment fragment){
         this.view = view;
         this.fragment = fragment;
-
         init();
-
     }
 
-
+//--------------------------------------------------------------------------------------------------
+//    1. 초기 작업
+//--------------------------------------------------------------------------------------------------
 
     public void init(){
-        di = (MainActivity) fragment.getActivity(); // 새로 생성하면 안되고 있던 것을 get 해와야 하는구나
-
         findAddress();
-        set(); // 툴바 이거 순서 안 지키면 리스너 안됨.
+        setToolbar(); // 순서 조심
         setListener();
-
+        setClipBoardDisable();
+        setEditDisabled();
     }
 
-//--------------------------------------------------------------------------------------------------
-//    1. findViewById
-//--------------------------------------------------------------------------------------------------
-
     public void findAddress(){
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        date = (TextView) view.findViewById(R.id.show_txt_detail_date);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar_update_qt);
         txt_detail_week = (EditText) view.findViewById(R.id.show_txt_detail_week);
         txt_detail_qt = (EditText) view.findViewById(R.id.show_txt_detail_qt);
         txt_detail_thanks = (EditText) view.findViewById(R.id.show_txt_detail_thanks);
         txt_detail_prayer = (EditText) view.findViewById(R.id.show_txt_detail_prayer);
-        txt_detail_journal = (EditText) view.findViewById(R.id.txt_detail_journal);
-        btn_add_thanks = (ImageView) view.findViewById(R.id.btn_add_thanks);
-        btn_add_prayer = (ImageView) view.findViewById(R.id.btn_add_prayer);
+        txt_detail_journal = (EditText) view.findViewById(R.id.show_txt_detail_journal);
+        date = (TextView) view.findViewById(R.id.show_txt_detail_date);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         check_week = (CheckBox) view.findViewById(R.id.show_check_week);
         check_qt = (CheckBox) view.findViewById(R.id.show_check_qt);
         check_thanks =(CheckBox) view.findViewById(R.id.show_check_thanks);
         check_prayer = (CheckBox) view.findViewById(R.id.show_check_prayer);
-        check_journal = (CheckBox) view.findViewById(R.id.check_journal);
+        check_journal = (CheckBox) view.findViewById(R.id.show_check_journal);
+
     }
 
-//--------------------------------------------------------------------------------------------------
-//    2. 리스너
-//--------------------------------------------------------------------------------------------------
-
     public void setListener(){
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() { // TODO 이거 어떻게 밖으로 뺴냐
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                di.openDrawer();
+                fragment.onPause();
             }
         });
-
-        btn_add_thanks.setOnClickListener(this);     // 감사 추가 버튼 리스너
-        btn_add_prayer.setOnClickListener(this);     // 기도 추가 버튼 리스너
-        fab.setOnClickListener(this);                // 클립보드로 복사 리스너
-        fab.setOnLongClickListener(this);            // 클립보드 복사 취소 리스너
+        fab.setOnClickListener(this);
+        fab.setOnLongClickListener(this);
         txt_detail_week.addTextChangedListener(weekListener);
         txt_detail_qt.addTextChangedListener(QTWatcher);
         txt_detail_thanks.addTextChangedListener(thanksWatcher);
@@ -104,16 +84,20 @@ public class QT_View implements View.OnClickListener, View.OnLongClickListener{
         txt_detail_journal.addTextChangedListener(journalWatcher);
     }
 
+    public void setToolbar(){
+        ((AppCompatActivity)fragment.getActivity()).setSupportActionBar(toolbar);
+        fragment.setHasOptionsMenu(true);
+        toolbar.setNavigationIcon(R.drawable.ic_action_back);
+    }
+
+//--------------------------------------------------------------------------------------------------
+//    2. 리스너
+//--------------------------------------------------------------------------------------------------
+
     // 2.1      -- 콜백 클릭 메소드
     @Override
     public void onClick(View view){
         switch(view.getId()){
-            case R.id.btn_add_thanks:
-//                fragment.addThanks();
-                break;
-            case R.id.btn_add_prayer:
-//                fragment.addPrayer();
-                break;
             case R.id.fab:
                 fragment.copy();
                 setClipBoardDisable();
@@ -213,36 +197,17 @@ public class QT_View implements View.OnClickListener, View.OnLongClickListener{
         }
     };
 
-
 //--------------------------------------------------------------------------------------------------
 //    3. 값 설정 메소드
 //--------------------------------------------------------------------------------------------------
 
-
-    // 3.1 초기화
-    public void set() {
-        setClipBoardDisable();
-        setThanksInvisible();
-        setPrayerInvisible();
-        setToolbar();
-    }
-
-    // 3. 값 설정
-    public void setToolbar(){
-        ((AppCompatActivity)fragment.getContext()).setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_action_hamburgur);
-
-    }
-
-    // 3.2 편집 불가 메소드
+    // 3.1 편집 불가 메소드
     public void setEditDisabled(){
         txt_detail_week.setEnabled(false);
         txt_detail_qt.setEnabled(false);
         txt_detail_thanks.setEnabled(false);
         txt_detail_prayer.setEnabled(false);
         txt_detail_journal.setEnabled(false);
-        btn_add_thanks.setEnabled(false);
-        btn_add_prayer.setEnabled(false);
     }
 
     // 3.2 편집 가능 메소드
@@ -250,12 +215,9 @@ public class QT_View implements View.OnClickListener, View.OnLongClickListener{
         txt_detail_week.setEnabled(true);
         txt_detail_qt.setEnabled(true);
         txt_detail_thanks.setEnabled(true);
-        btn_add_prayer.setEnabled(true);
+        txt_detail_prayer.setEnabled(true);
         txt_detail_journal.setEnabled(true);
-        btn_add_thanks.setEnabled(true);
-        btn_add_prayer.setEnabled(true);
     }
-
 
     // 3.3 클립보드 사용
     public void setClipBoardEnabled(){
@@ -280,27 +242,8 @@ public class QT_View implements View.OnClickListener, View.OnLongClickListener{
 
     }
 
-
-    // 3.5 감사 추가 보이기 & 안보이기
-    public void setThanksInvisible(){
-        txt_detail_thanks.setVisibility(View.GONE);
-    }
-
-    public void setThanksVisible(){
-        txt_detail_prayer.setVisibility(View.VISIBLE);
-    }
-
-    // 3.6 기도 추가 보이기 & 안보이기
-    public void setPrayerInvisible(){
-        txt_detail_prayer.setVisibility(View.GONE);
-    }
-
-    public void setPrayerVisible(){
-        txt_detail_prayer.setVisibility(View.VISIBLE);
-    }
-
-    // 3.7 아이콘 바꾸기
-    boolean status = true;   // TODO 이런 로직은 여기 있으면 안 됨
+    // 3.5 아이콘 바꾸기
+    boolean status = true;
     public void changeEditableIcon(MenuItem item){
         switch (item.getItemId()){
             case R.id.temp_save:
@@ -315,8 +258,7 @@ public class QT_View implements View.OnClickListener, View.OnLongClickListener{
         }
     }
 
-    // 3.9 대화상자 관리
-    // 삭제 여부 묻기
+    // 3.6 삭제 여부 묻기
     public void askDelete(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(fragment.getContext());
         dialog.setTitle("삭제하시겠습니까");
@@ -329,49 +271,5 @@ public class QT_View implements View.OnClickListener, View.OnLongClickListener{
         });
         dialog.show();
     }
-
-    // 저장 여부 묻기
-    public void askSave(){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(fragment.getContext());
-        dialog.setTitle("저장하시겠습니까?");
-        dialog.setNegativeButton("아니오", null);
-        dialog.setPositiveButton("예", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                fragment.save();
-            }
-        });
-        dialog.show();
-    }
-
-
-//--------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------
-
-
-    public void setWeekView(String week){
-        txt_detail_week.setText(week);
-    }
-
-    public void setQTView(String qt){
-        txt_detail_qt.setText(qt);
-    }
-
-    public void setThanksView(String thanks){
-        txt_detail_thanks.setText(thanks);
-    }
-
-    public void setPrayerView(String prayer){
-        txt_detail_prayer.setText(prayer);
-    }
-
-    public void setJournalView(String journal){
-        txt_detail_journal.setText(journal);
-    }
-
-    public void setDate(String time){
-        date.setText(time);
-    }
-
 
 }
